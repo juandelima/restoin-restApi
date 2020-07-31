@@ -9,7 +9,6 @@ exports.create = (req, res) => {
     }
 
     const rating = new RatingResto({
-        id_rating: req.body.id_rating,
         id_resto: req.body.id_resto,
         id_user: req.body.id_user,
         rating: req.body.rating,

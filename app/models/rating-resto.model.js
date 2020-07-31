@@ -1,7 +1,6 @@
 const sql = require("./db.js");
 
 const RatingResto = function(rating) {
-    this.id_rating = rating.id_rating;
     this.id_resto = rating.id_resto;
     this.id_user = rating.id_user;
     this.rating = rating.rating;

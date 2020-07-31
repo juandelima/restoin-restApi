@@ -1,5 +1,5 @@
-const MenuResto = require('../models/menu-resto.model.js');
-
+const menu = require('../models/menu-resto.model.js');
+const MenuResto = menu.MenuResto;
 exports.create = (req, res) => {
     // Validate request
     if (!req.body) {
@@ -9,7 +9,6 @@ exports.create = (req, res) => {
     }
 
     const menu = new MenuResto({
-        id_menu: req.body.id_menu,
         id_resto: req.body.id_resto,
         id_kategori_menu: req.body.id_kategori_menu,
         nama_menu: req.body.nama_menu,

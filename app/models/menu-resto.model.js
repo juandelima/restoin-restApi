@@ -1,7 +1,6 @@
 const sql = require("./db.js");
 
 const MenuResto = function(menu) {
-    this.id_menu = menu.id_menu;
     this.id_resto = menu.id_resto;
     this.id_kategori_menu = menu.id_kategori_menu;
     this.nama_menu = menu.nama_menu;
@@ -10,7 +9,7 @@ const MenuResto = function(menu) {
     this.foto_menu = menu.foto_menu;
     this.status_menu = menu.status_menu;
     this.is_delete = menu.is_delete;
-}
+};
 
 MenuResto.create = (newMenu, result) => {
     sql.query("INSERT INTO menu_resto SET ?", newMenu, (err, res) => {
@@ -69,6 +68,23 @@ MenuResto.updateById = (id, data, result) => {
     );
 };
 
+MenuResto.findById = (id, result) => {
+  sql.query("SELECT harga FROM menu_resto WHERE id_menu = ?", id, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+
+    if (res.affectedRows == 0) {
+      result({ kind: "not_found" }, null);
+      return;
+    }
+
+    result(null, res);
+  });
+};
+
 MenuResto.remove = (id, result) => {
     sql.query("DELETE FROM menu_resto WHERE id_menu = ?", id, (err, res) => {
       if (err) {
@@ -100,4 +116,18 @@ MenuResto.removeAll = result => {
     });
 };
 
-module.exports = MenuResto;
+function getHargaMenu(id_menu, callback) { 
+  const query = `SELECT harga FROM menu_resto WHERE id_menu = ${id_menu}`;
+  sql.query(query, function(err, results) {
+    if (err){ 
+      throw err;
+    }
+
+    return callback(results[0].harga);
+  });
+}
+
+module.exports = {
+  MenuResto,
+  getHargaMenu
+};

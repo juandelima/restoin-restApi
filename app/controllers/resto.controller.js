@@ -7,9 +7,7 @@ exports.create = (req, res) => {
         message: "Content can not be empty!"
       });
     }
-
     const resto = new Resto({
-        id_resto: req.body.id_resto,
         nama_resto: req.body.nama_resto,
         latitude: req.body.latitude,
         longitude: req.body.longitude,
@@ -23,12 +21,14 @@ exports.create = (req, res) => {
     });
 
     Resto.create(resto, (err, data) => {
-      if (err)
+      if (err) {
         res.status(500).send({
           message:
             err.message || "Some error occurred while creating the Resto."
         });
-      else res.send(data);
+      } else {
+        res.send(data);
+      }
     });
 };
 

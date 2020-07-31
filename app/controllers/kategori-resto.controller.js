@@ -9,7 +9,6 @@ exports.create = (req, res) => {
     }
   
     const kategori = new KategoriResto({
-        id_kategori: req.body.id_kategori,
         nama_kategori: req.body.nama_kategori,
     });
 

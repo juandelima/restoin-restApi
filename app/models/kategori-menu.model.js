@@ -1,10 +1,8 @@
 const sql = require("./db.js");
 
 const KategoriMenu = function(kategori) {
-    this.id_kategori = kategori.id_kategori;
     this.nama_kategori = kategori.nama_kategori;
 }
-
 
 KategoriMenu.create = (newKategori, result) => {
     sql.query("INSERT INTO kategori_menu SET ?", newKategori, (err, res) => {
@@ -13,9 +11,12 @@ KategoriMenu.create = (newKategori, result) => {
         result(err, null);
         return;
       }
-  
-      console.log("created kategori: ", {...newKategori });
-      result(null, {...newKategori });
+      console.log({
+        "success": "kategori_menu successfully created"
+       });
+      result(null, {
+        "success": "kategori_menu successfully created",
+      });
     });
 };
 

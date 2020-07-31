@@ -1,7 +1,6 @@
 const sql = require("./db.js");
 
 const User = function(user) {
-    this.id_user = user.id_user;
     this.foto_profil = user.foto_profil;
     this.nama_lengkap = user.nama_lengkap;
     this.email = user.email;
