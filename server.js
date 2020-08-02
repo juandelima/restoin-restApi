@@ -24,6 +24,8 @@ require('./app/routes/order.routes')(app);
 require('./app/routes/booking.routes')(app);
 require('./app/routes/history_booking.routes')(app);
 require('./app/routes/history_order.routes')(app);
+require('./app/routes/notifikasi.routes')(app);
+require('./app/routes/estimasi_masak.routes')(app);
 const PORT = process.env.PORT || 3000;
 // set port, listen for requests
 app.listen(PORT, () => {

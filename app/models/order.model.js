@@ -11,7 +11,6 @@ const Order = function(order) {
 };
 
 Order.create = (newOrder, result) => {
-
     sql.query("INSERT INTO order_menu SET ?", newOrder, (err, res) => {
         if (err) {
           console.log("error: ", err);
@@ -98,19 +97,35 @@ Order.filterByIdUser = (id_user, result) => {
   });
 };
 
-function get_last_id_order(callback) {
-  const query = `SELECT id_order FROM order_menu ORDER BY id_order DESC LIMIT 1`;
+function get_last_id(callback) {
+  const query = `SELECT o.id_order, o.id_user, u.nama_lengkap, 
+  m.nama_menu, o.qty, o.total_harga, o.metode_pembayaran FROM order_menu o 
+  INNER JOIN user u on o.id_user = u.id_user 
+  INNER JOIN menu_resto m on o.id_menu = m.id_menu ORDER BY id_order DESC LIMIT 1`;
   sql.query(query, function(err, result) {
-    if (err){ 
+    if(err){ 
         throw err;
     }
 
-    return callback(result[0].id_order);
+    return callback(result[0]);
+  });
+}
+
+function find_by_id_order(id_order, callback) {
+  const query = `SELECT o.id_order, o.id_user, u.nama_lengkap, o.qty FROM order_menu o 
+  INNER JOIN user u on o.id_user = u.id_user WHERE o.id_order = ${id_order}`;
+  sql.query(query, function(err, result) {
+    if(err){ 
+        throw err;
+    }
+
+    return callback(result[0]);
   });
 }
 
 
 module.exports = {
     Order,
-    get_last_id_order
+    get_last_id,
+    find_by_id_order
 };

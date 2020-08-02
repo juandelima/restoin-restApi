@@ -4,11 +4,10 @@ const HistoryOrder = function(history) {
     this.id_order = history.id_order;
 };
 
-HistoryOrder.create = (newHistory, result) => {
-    sql.query("INSERT INTO history_order SET ?", newHistory, (err, res) => {
+HistoryOrder.create = newHistory => {
+    sql.query("INSERT INTO history_order SET ?", newHistory, (err) => {
         if(err) {
           console.log("error: ", err);
-          result(err, null);
           return;
         }
 
@@ -16,9 +15,6 @@ HistoryOrder.create = (newHistory, result) => {
           "success": "history_order successfully created"
         });
         
-        result(null, {
-          "success": "history_order successfully created",
-        });
     });
 };
 

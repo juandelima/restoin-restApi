@@ -15,7 +15,6 @@ exports.create = (req, res) => {
         jumlah_orang: req.body.jumlah_orang,
         tanggal_book: req.body.tanggal_book,
         jam: req.body.jam,
-        status: req.body.status
     });
 
     Booking.create(booking, (err, data) => {

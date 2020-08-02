@@ -1,7 +1,10 @@
 const OrderModel = require('../models/order.model.js');
 const MenuResto = require('../models/menu-resto.model.js');
 const HistoryOrder = require('../models/history_order.model.js');
+const Notif = require('../models/notification.model.js');
+const EstimasiMasakModel = require('../models/estimasi_masak.model.js');
 const Order = OrderModel.Order;
+const EstimasiMasak = EstimasiMasakModel.EstimasiMasak;
 
 exports.create = (req, res) => {
     // Validate request
@@ -32,21 +35,40 @@ exports.create = (req, res) => {
                 err.message || "Some error occurred while creating the order."
             });
           } else {
-            OrderModel.get_last_id_order(function(result) {
-              const id_order = result;
+            OrderModel.get_last_id(function(result) {
+              const id_order = result.id_order;
+              const id_user = result.id_user;
+              const nama_lengkap = result.nama_lengkap;
+              const nama_menu = result.nama_menu;
+              const qty = result.qty;
+              const total_harga = result.total_harga;
+              const metode_pembayaran = result.metode_pembayaran;
+
+              const notification = new Notif({
+                id_user: id_user,
+                id_order: id_order,
+                info_notif: `Yeay, ada orderan baru nih... ${nama_lengkap} memesan ${nama_menu} sebanyak ${qty}. Total harga ${total_harga}. Bayar menggunakan ${metode_pembayaran}.`,
+                status: 0,
+                is_deleted: 0,
+              });
+
+              const estimasi = new EstimasiMasak({
+                id_order: id_order,
+                iscooked: 0,
+                timebfrmasak: null,
+                timeaftmasak: null,
+              });
+
               const history_order = new HistoryOrder({
                 id_order: id_order
               });
 
-              HistoryOrder.create(history_order, (err, data) => {
-                if(err) {
-                  res.status(500).send({
-                      message: err.message || "Some error occurred while creating the History Order."
-                  });
-                } else { 
-                    res.send(data);
-                }
-              });
+              Notif.create(notification);
+
+              EstimasiMasak.create(estimasi);
+
+              HistoryOrder.create(history_order);
+
               res.send(data);
             });
           }

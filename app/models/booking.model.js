@@ -5,7 +5,6 @@ const Booking = function(book) {
     this.jumlah_orang = book.jumlah_orang;
     this.tanggal_book = book.tanggal_book;
     this.jam = book.jam;
-    this.status = book.status;
 };
 
 Booking.create = (newBook, result) => {
@@ -28,7 +27,7 @@ Booking.create = (newBook, result) => {
 
 Booking.getAll = result => {
     sql.query(`SELECT b.id_booking, u.nama_lengkap, b.jumlah_orang, 
-    b.tanggal_book, b.jam, b.status, b.session, b.created_at FROM booking b 
+    b.tanggal_book, b.jam, b.session, b.created_at FROM booking b 
     INNER JOIN user u ON b.id_user = u.id_user ORDER BY b.tanggal_book DESC`, (err, res) => {
         if(err) {
             console.log("error: ", err);
@@ -67,7 +66,7 @@ Booking.updateById = (id, booking, result) => {
 
 Booking.filterByIdUser = (id, result) => {
     sql.query(`SELECT b.id_booking, b.id_user, u.nama_lengkap, 
-    b.jumlah_orang, b.tanggal_book, b.jam, b.status, 
+    b.jumlah_orang, b.tanggal_book, b.jam, 
     b.session, b.created_at FROM booking b 
     INNER JOIN user u ON b.id_user = u.id_user where b.id_user = ${id} 
     ORDER BY b.tanggal_book DESC`, 
