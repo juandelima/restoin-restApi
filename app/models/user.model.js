@@ -7,9 +7,6 @@ const User = function(user) {
     this.password = user.password;
     this.no_telepon = user.no_telepon;
     this.role = user.role;
-    this.is_delete = user.is_delete;
-    this.created_at = user.created_at;
-    this.updated_at = user.updated_at;
 }
 
 User.create = (newUser, result) => {
@@ -27,7 +24,7 @@ User.create = (newUser, result) => {
 
 User.getAll = result => {
     sql.query(`SELECT id_user, foto_profil, nama_lengkap, 
-    email, password, no_telepon, role, is_delete, created_at, updated_at FROM user order by id_user desc`, (err, res) => {
+    email, password, no_telepon, role, is_deleted, created_at, updated_at FROM user order by id_user desc`, (err, res) => {
         if(err) {
             console.log("error: ", err);
             result(err, null);
@@ -42,7 +39,7 @@ User.getAll = result => {
 User.updateById = (id, data, result) => {
     sql.query(
       `UPDATE user SET foto_profil = ?, nama_lengkap = ?, email = ?, password = ?, 
-      no_telepon = ?, role = ?, is_delete = ? WHERE id_user = ? 
+      no_telepon = ?, role = ?, is_deleted = ? WHERE id_user = ? 
       `,
       [data.foto_profil, data.nama_lengkap, data.email,
         data.password, data.no_telepon, data.role, data.is_delete, id],

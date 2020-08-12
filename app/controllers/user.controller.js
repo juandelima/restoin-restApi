@@ -14,10 +14,7 @@ exports.create = (req, res) => {
         email: req.body.email,
         password: req.body.password,
         no_telepon: req.body.no_telepon,
-        role: req.body.role,
-        is_delete: req.body.is_delete,
-        created_at: req.body.created_at,
-        updated_at: req.body.updated_at
+        role: req.body.role
     });
 
     User.create(user, (err, data) => {
