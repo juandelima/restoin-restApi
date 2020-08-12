@@ -4,20 +4,15 @@ const HistoryBook = function(history) {
     this.id_book = history.id_book;
 };
 
-HistoryBook.create = (newHistory, result) => {
-    sql.query("INSERT INTO history_book SET ?", newHistory, (err, res) => {
+HistoryBook.create = newHistory => {
+    sql.query("INSERT INTO history_book SET ?", newHistory, (err) => {
         if(err) {
           console.log("error: ", err);
-          result(err, null);
           return;
         }
 
         console.log({
           "success": "history_book successfully created"
-        });
-        
-        result(null, {
-          "success": "history_book successfully created",
         });
     });
 };

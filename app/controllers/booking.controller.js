@@ -12,9 +12,10 @@ exports.create = (req, res) => {
 
     const booking = new Booking({
         id_user: req.body.id_user,
+        id_resto: req.body.id_resto,
         jumlah_orang: req.body.jumlah_orang,
         tanggal_book: req.body.tanggal_book,
-        jam: req.body.jam,
+        jam: req.body.jam
     });
 
     Booking.create(booking, (err, data) => {
@@ -25,21 +26,12 @@ exports.create = (req, res) => {
         } else {
             BookingModel.get_last_id_booking(function(result) {
                 const id_booking = result;
-
+                
                 const history_book = new HistoryBook({
                     id_book: id_booking
                 });
                 
-                HistoryBook.create(history_book, (err, data) => {
-                    if(err) {
-                        res.status(500).send({
-                            message: err.message || "Some error occurred while creating the History Book."
-                        });
-                    } else { 
-                        res.send(data);
-                    }
-                });
-
+                HistoryBook.create(history_book);
                 res.send(data);
             });
         }
@@ -107,4 +99,3 @@ exports.findByIdUser = (req, res) => {
         } 
     )
 };
-

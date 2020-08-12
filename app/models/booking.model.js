@@ -2,6 +2,7 @@ const sql = require("./db.js");
 
 const Booking = function(book) {
     this.id_user = book.id_user;
+    this.id_resto = book.id_resto;
     this.jumlah_orang = book.jumlah_orang;
     this.tanggal_book = book.tanggal_book;
     this.jam = book.jam;
@@ -26,9 +27,11 @@ Booking.create = (newBook, result) => {
 };
 
 Booking.getAll = result => {
-    sql.query(`SELECT b.id_booking, u.nama_lengkap, b.jumlah_orang, 
+    sql.query(`SELECT b.id_booking, r.nama_resto, u.nama_lengkap, b.jumlah_orang, 
     b.tanggal_book, b.jam, b.session, b.created_at FROM booking b 
-    INNER JOIN user u ON b.id_user = u.id_user ORDER BY b.tanggal_book DESC`, (err, res) => {
+    INNER JOIN user u ON b.id_user = u.id_user 
+    INNER JOIN resto r ON b.id_resto = r.id_resto
+    ORDER BY b.tanggal_book DESC`, (err, res) => {
         if(err) {
             console.log("error: ", err);
             result(err, null);
@@ -84,7 +87,7 @@ Booking.filterByIdUser = (id, result) => {
 function get_last_id_booking(callback) {
     const query = `SELECT id_booking FROM booking ORDER BY id_booking DESC LIMIT 1`;
     sql.query(query, function(err, result) {
-        if (err){ 
+        if(err){ 
             throw err;
         }
 
@@ -96,4 +99,3 @@ module.exports = {
     Booking,
     get_last_id_booking
 };
-

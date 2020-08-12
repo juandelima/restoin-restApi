@@ -5,4 +5,4 @@ module.exports = app => {
     app.put("/user/:id_user", user.update);
     app.delete("/user/:id_user", user.delete);
     app.delete("/user", user.deleteAll);
-}
+};

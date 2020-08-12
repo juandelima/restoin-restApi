@@ -15,8 +15,7 @@ exports.create = (req, res) => {
         harga: req.body.harga,
         deskripsi: req.body.deskripsi,
         foto_menu: req.body.foto_menu,
-        status_menu: req.body.status_menu,
-        is_delete: req.body.is_delete
+        status_menu: req.body.status_menu
     });
 
     MenuResto.create(menu, (err, data) => {
@@ -40,6 +39,21 @@ exports.findAll = (req, res) => {
         res.send(data);
       }
     });
+};
+
+exports.findByIdResto = (req, res) => {
+  MenuResto.getByIdResto(
+    req.params.id_resto,
+    (err, data) => {
+    if (err) {
+      res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving MenuResto."
+        });
+    } else {
+      res.send(data);
+    }
+  });
 };
 
 exports.update = (req, res) => {

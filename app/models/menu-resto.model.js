@@ -8,7 +8,6 @@ const MenuResto = function(menu) {
     this.deskripsi = menu.deskripsi;
     this.foto_menu = menu.foto_menu;
     this.status_menu = menu.status_menu;
-    this.is_delete = menu.is_delete;
 };
 
 MenuResto.create = (newMenu, result) => {
@@ -26,7 +25,7 @@ MenuResto.create = (newMenu, result) => {
 
 MenuResto.getAll = result => {
     sql.query(`SELECT menu.id_menu, r.nama_resto, k.nama_kategori, menu.nama_menu, menu.harga, 
-    menu.deskripsi, menu.foto_menu, menu.status_menu, menu.is_delete, menu.created_at, menu.updated_at 
+    menu.deskripsi, menu.foto_menu, menu.status_menu, menu.is_deleted, menu.created_at, menu.updated_at 
     from menu_resto menu INNER JOIN resto r on menu.id_resto = r.id_resto INNER JOIN kategori_menu k 
     on menu.id_kategori_menu = k.id_kategori order by menu.id_menu desc`, (err, res) => {
         if(err) {
@@ -38,6 +37,22 @@ MenuResto.getAll = result => {
         console.log("Menu Resto: ", res);
         result(null, res);
     });
+};
+
+MenuResto.getByIdResto = (id_resto, result) => {
+  sql.query(`SELECT menu.id_menu, r.nama_resto, k.nama_kategori, menu.nama_menu, menu.harga, 
+  menu.deskripsi, menu.foto_menu, menu.status_menu, menu.is_deleted, menu.created_at, menu.updated_at 
+  from menu_resto menu INNER JOIN resto r on menu.id_resto = r.id_resto INNER JOIN kategori_menu k 
+  on menu.id_kategori_menu = k.id_kategori where menu.id_resto = ${id_resto} order by menu.id_menu desc`, (err, res) => {
+      if(err) {
+          console.log("error: ", err);
+          result(err, null);
+          return;
+      }
+
+      console.log("Menu Resto: ", res);
+      result(null, res);
+  });
 };
 
 MenuResto.updateById = (id, data, result) => {
