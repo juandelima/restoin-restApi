@@ -9,19 +9,6 @@ const User = function(user) {
     this.role = user.role;
 }
 
-User.create = (newUser, result) => {
-    sql.query("INSERT INTO user SET ?", newUser, (err, res) => {
-      if (err) {
-        console.log("error: ", err);
-        result(err, null);
-        return;
-      }
-  
-      console.log("created user: ", {...newUser });
-      result(null, {...newUser });
-    });
-};
-
 User.getAll = result => {
     sql.query(`SELECT id_user, foto_profil, nama_lengkap, 
     email, password, no_telepon, role, is_deleted, created_at, updated_at FROM user order by id_user desc`, (err, res) => {

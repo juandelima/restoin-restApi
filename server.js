@@ -1,7 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const session = require('express-session');
 
 const app = express();
+
+app.use(session({
+	secret: 'secret',
+	resave: true,
+	saveUninitialized: true
+}));
 
 // parse requests of content-type: application/json
 app.use(bodyParser.json());
@@ -14,6 +21,8 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to RestoinApi." });
 });
 
+require('./app/routes/register.routes')(app);
+require('./app/routes/authenticate.routes')(app);
 require('./app/routes/kategori-menu.routes')(app);
 require('./app/routes/kategori-resto.routes')(app);
 require('./app/routes/menu-resto.routes')(app);

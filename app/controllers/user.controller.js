@@ -1,32 +1,5 @@
 const User = require('../models/user.model.js');
 
-exports.create = (req, res) => {
-    // Validate request
-    if (!req.body) {
-      res.status(400).send({
-        message: "Content can not be empty!"
-      });
-    }
-
-    const user = new User({
-        foto_profil: req.body.foto_profil,
-        nama_lengkap: req.body.nama_lengkap,
-        email: req.body.email,
-        password: req.body.password,
-        no_telepon: req.body.no_telepon,
-        role: req.body.role
-    });
-
-    User.create(user, (err, data) => {
-      if (err)
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while creating the User."
-        });
-      else res.send(data);
-    });
-};
-
 exports.findAll = (req, res) => {
     User.getAll((err, data) => {
       if (err) {

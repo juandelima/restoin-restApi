@@ -7,6 +7,7 @@ exports.create = (req, res) => {
         message: "Content can not be empty!"
       });
     }
+    
     const resto = new Resto({
         nama_resto: req.body.nama_resto,
         latitude: req.body.latitude,

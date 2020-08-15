@@ -21,9 +21,9 @@ exports.findByStatusAndPayMethod = (req, res) => {
         (err, data) => {
             if (err) {
                 if (err.kind === "not_found") {
-                res.status(404).send({
-                    message: `Not found History Orders with payment_method: ${req.params.payment_method} and status: ${req.params.status}.`
-                });
+                    res.status(404).send({
+                        message: `Not found History Orders with payment_method: ${req.params.payment_method} and status: ${req.params.status}.`
+                    });
                 } else {
                     res.status(500).send({
                       message: `Error when searching Orders with payment_method: ${req.params.payment_method} and status: ${req.params.status}.`
@@ -34,7 +34,6 @@ exports.findByStatusAndPayMethod = (req, res) => {
             }
         }
     );
-    
 };
 
 exports.findByPaymentMethod = (req, res) => {
