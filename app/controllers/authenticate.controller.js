@@ -1,5 +1,4 @@
 const Authenticate = require('../models/authenticate.model.js');
-const session = require('express-session');
 
 exports.login = (req, res) => {
     // Validate request
