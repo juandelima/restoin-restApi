@@ -29,8 +29,9 @@ Auth.login = (email, password, result) => {
                 }
             } else {
                 result(null, {
-                    "success": "Email does not exits",
-                });  
+                    "success": "Email does not exist",
+                });
+  
             }
         }
     });
